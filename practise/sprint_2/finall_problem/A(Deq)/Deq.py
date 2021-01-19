@@ -8,13 +8,13 @@ class Deq:
         self.que = [None for elem in range(1001)]  # размер второй части дека
 
         self.head = -1  # голова стека
-        self.tail = -1  # хвост очереди
+        self.tail = 0  # хвост очереди
 
         self.stack_que = False  # показывает в каком массиве мы находимся для стека
         self.que_stack = True  # показывает в каком массив е мы находимся для очереди
 
-    # добавить элемент в конец дека
-    def push_back(self, value):
+    # добавить элемент в начало дека
+    def push_front(self, value):
         if self.size == self.max_size:
             print("error")
             return
@@ -40,8 +40,8 @@ class Deq:
             self.que[self.head] = value
             self.size += 1
 
-    # добавить элемент в начало дека
-    def push_front(self, value):
+    # добавить элемент в конец дека
+    def push_back(self, value):
         if self.size == self.max_size:  # массив переполнен
             print('error')
             return
@@ -70,6 +70,17 @@ class Deq:
             print('error')
             return
 
+        # особый случай
+        if self.head == -1:
+            self.head = 0
+
+            print(self.que[self.head])
+
+            self.head += 1
+            self.stack_que = True
+            self.size -= 1
+            return
+
         # общий случай удаления
         if not self.stack_que:
             print(self.stack[self.head])
@@ -85,7 +96,7 @@ class Deq:
             self.head += 1
             self.size -= 1
 
-    # вывести и удалить элемент с конца дека
+    # вывести и удалить первый элемент
     def pop_back(self):
         if self.size == 0:
             print('error')
@@ -97,7 +108,7 @@ class Deq:
             self.tail -= 1
             self.size -= 1
 
-            if self.tail == -1:  # условие перехода в массив que
+            if self.tail == -1:  # условие перехода в массив stack
                 self.que_stack = True
                 self.tail = 0
 
@@ -122,4 +133,5 @@ for _ in range(count_command):
         deq_first.pop_front()
     if command[0] == 'pop_back':
         deq_first.pop_back()
-
+    else:
+        pass
