@@ -133,5 +133,4 @@ for _ in range(count_command):
         deq_first.pop_front()
     if command[0] == 'pop_back':
         deq_first.pop_back()
-    else:
-        pass
+
