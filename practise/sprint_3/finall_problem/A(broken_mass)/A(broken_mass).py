@@ -1,5 +1,4 @@
-
-# номер посылки: 47168129
+# номер посылки: 47401290
 
 # напишем метод для поиска элемента
 # используем реализацию бинарного поиска на цикле
@@ -18,11 +17,21 @@
 # O(1) --> помимо входного массива мы используем только набор констант
 
 
-def search_elem_position(mass, search_elem):
+def search_elem_position():
+
+    # считали длину массива
+    mass_len = int(input())
+
+    # считали искомый элемент
+    search_elem = int(input())
+
+    # считали исходный массив
+    mass = [int(elem) for elem in input().split(" ")]
+
     left_border = 0
     right_border = len(mass) - 1
 
-    is_more = True if mass[0] <= search_elem else False
+    is_more = mass[0] <= search_elem
 
     while True:
 
@@ -40,7 +49,7 @@ def search_elem_position(mass, search_elem):
         if is_more:
 
             # движение вправо
-            if mass[mid] < search_elem and mass[0] < mass[mid]:
+            if search_elem > mass[mid] > mass[0]:
                 left_border = mid + 1
             # движение влево
             else:
@@ -48,7 +57,7 @@ def search_elem_position(mass, search_elem):
                 right_border = mid - 1
         else:
             # движение влево
-            if mass[mid] > search_elem and mass[0] > mass[mid]:
+            if search_elem < mass[mid] < mass[0]:
                 right_border = mid - 1
 
             # движение вправо
@@ -57,13 +66,5 @@ def search_elem_position(mass, search_elem):
                 left_border = mid + 1
 
 
-# считали длину массива
-mass_len = int(input())
-
-# считали искомый элемент
-search_elem = int(input())
-
-# считали исходный массив
-mass = [int(elem) for elem in input().split(" ")]
-
-print(search_elem_position(mass, search_elem))
+if __name__ == "__main__":
+    print(search_elem_position())

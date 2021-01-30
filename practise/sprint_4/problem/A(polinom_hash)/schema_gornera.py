@@ -1,10 +1,9 @@
-import sys
-
+# hello
 
 def polinom():
 
-    osn = int(sys.stdin.readline())
-    mod = int(sys.stdin.readline())
+    osn = int(input())
+    mod = int(input())
     str = input()
 
 
