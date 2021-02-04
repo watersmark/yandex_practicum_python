@@ -57,35 +57,29 @@ def work_with_text(hash_map):
 
         # выберем пять лучших документов
         # перейдём в следующую функцию
-        top_five_dock(temp_set)
+
+        temp_set = list(temp_set.items())
+
+        # отберём пять лучших запросов
+        index = 0
+        for i in range(len(temp_set)):
+            if index == 5: break
+            for j in range(len(temp_set) - i - 1):
+                if temp_set[j][1] > temp_set[j + 1][1]:
+                    temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
+
+                elif temp_set[j][1] == temp_set[j + 1][1] and temp_set[j][0] < temp_set[j + 1][0]:
+                    temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
+            index += 1
+
+        # выведем наши топ 5 документов
+        lens = len(temp_set) - 1
+        for index in range(len(temp_set)):
+            if index == 5: break
+            print(temp_set[lens - index][0] + 1, end=" ")
+
+        print()
 
 
-# отсортируем и выберем пять лучших документов
-def top_five_dock(temp_set):
-    temp_set = list(temp_set.items())
-
-    # отберём пять лучших запросов
-    # выьерем пять лучших элементов за 5 * O(n)
-    index = 0
-    for i in range(len(temp_set)):
-        if index == 5: break
-        for j in range(len(temp_set) - i - 1):
-            if temp_set[j][1] > temp_set[j + 1][1]:
-                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
-
-            elif temp_set[j][1] == temp_set[j + 1][1] and temp_set[j][0] < temp_set[j + 1][0]:
-                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
-        index += 1
-
-    # выведем наши топ 5 документов
-    lens = len(temp_set) - 1
-    for index in range(len(temp_set)):
-        if index == 5: break
-        print(temp_set[lens - index][0] + 1, end=" ")
-
-    print()
-
-
-# точка входа в программу.
-if __name__ == "__main__":
-    calc_hash_map()
+# точка входа в программу
+calc_hash_map()
