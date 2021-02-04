@@ -1,8 +1,6 @@
-def 
-
 
 # начало работы программы
-def start():
+def calc_hash_map():
     # кол-во документов на вход
     count_dock = int(input())
 
@@ -14,6 +12,8 @@ def start():
 
         # строка для временного считывания
         temp_str = input().split()
+
+        # считывем каждый элемнт по отдельности
         for elem in temp_str:
             if elem in hash_map:
                 # если данный номер документа уже есть, иначе создадим
@@ -24,20 +24,26 @@ def start():
             else:
                 hash_map[elem] = {index: 1}
 
+    # перейдём к работе с запросами и поиску документов
+    # переходим во вторую функцию
+    work_with_text(hash_map)
+
+
+def work_with_text(hash_map):
+
     # перейдём к работе с запросами
     # кол-во запросов
     count_quest = int(input())
 
-    # создадим set() для подсчёта релевантности
-    temp_set = dict()
-
     # обработаем каждый запрос по отдельности
     for index in range(count_quest):
+
+        # создадим set() для подсчёта релевантности
         temp_set = dict()
         temp_str = set(input().split())
 
         # пройдёмся по каждому элементу запроса
-        # для каждого элемента подситаем кол-во вхождений
+        # для каждого элемента подсчитаем кол-во вхождений
         for elem in temp_str:
 
             if elem in hash_map:
@@ -50,24 +56,35 @@ def start():
                     else:
                         temp_set[key] = hash_map[elem][key]
 
-        temp_set = sorted(list(temp_set.items()), key=, reverse=True)
+        # выберем пять лучших документов
+        # перейдём в следующую функцию
+        top_five_dock(temp_set)
 
-        print(temp_set)
 
-        index = 0
-        while index != 5 and len(temp_set) > index:
-            print(temp_set[index][0] + 1, end=" ")
-            index += 1
+# отсортируем и выберем пять лучших документов
+def top_five_dock(temp_set):
+    temp_set = list(temp_set.items())
+    # отберём пять лучших запросов
+    index = 0
 
-        print('end step')
+    for i in range(len(temp_set)):
+        if index == 5: break
+        for j in range(len(temp_set) - i - 1):
+            if temp_set[j][1] > temp_set[j + 1][1]:
+                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
 
+            elif temp_set[j][1] == temp_set[j + 1][1] and temp_set[j][0] < temp_set[j + 1][0]:
+                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
+        index += 1
+
+    lens = len(temp_set) - 1
+
+    for index in range(len(temp_set)):
+        if index == 5: break
+        print(temp_set[lens - index][0] + 1, end=" ")
+
+    print()
 
 # точка входа в программу
 if __name__ == "__main__":
-    start()
-    # dict = {1: 2, 0: 2, 2: 3}
-    #
-    # dict = sorted(list(dict.items()), key=lambda item: (item[0], item[1]))
-    # print(dict)
-    # mass = [(1, 2), (0, 2)]
-    # print(mass[1][0])
+    calc_hash_map()
