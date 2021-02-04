@@ -1,3 +1,4 @@
+#посылка :47949852
 # начало работы программы
 def calc_hash_map():
     # кол-во документов на вход
@@ -66,16 +67,8 @@ def top_five_dock(temp_set):
 
     # отберём пять лучших запросов
     # выьерем пять лучших элементов за 5 * O(n)
-    index = 0
-    for i in range(len(temp_set)):
-        if index == 5: break
-        for j in range(len(temp_set) - i - 1):
-            if temp_set[j][1] > temp_set[j + 1][1]:
-                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
 
-            elif temp_set[j][1] == temp_set[j + 1][1] and temp_set[j][0] < temp_set[j + 1][0]:
-                temp_set[j], temp_set[j + 1] = temp_set[j + 1], temp_set[j]
-        index += 1
+    temp_set = sorted(temp_set, key=lambda item: (item[1], -item[0]))
 
     # выведем наши топ 5 документов
     lens = len(temp_set) - 1
