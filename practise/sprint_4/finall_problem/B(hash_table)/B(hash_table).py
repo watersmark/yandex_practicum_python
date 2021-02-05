@@ -1,4 +1,4 @@
-# номер посылки: 47614883
+# номер посылки: 48012485
 # временная сложность в среднем O(1)
 # пространственная O(n)
 
@@ -27,14 +27,14 @@ class HashTable:
 
     # вставляем новый элемент
     def put(self, key, value):
-        hash = self.get_hash(key)
+        hash_value = self.get_hash(key)
 
         # если массив пустой, то просто добавляем элемент
         # в ином случае, ищем в связном списке
-        if not self.mass[hash]:
-            self.mass[hash] = Node(key, value)
+        if not self.mass[hash_value]:
+            self.mass[hash_value] = Node(key, value)
         else:
-            temp_head = self.mass[hash]
+            temp_head = self.mass[hash_value]
 
             # проверяем каждый узел, если ничего не нашли для
             # обновления, то просто добавляем новый элемент в начало
@@ -47,52 +47,42 @@ class HashTable:
 
             # так как мы не нашли элемента, мы добавим его в начало
             new_node = Node(key, value)
-            new_node.next = self.mass[hash].next
-            self.mass[hash].next = new_node
+            new_node.next = self.mass[hash_value].next
+            self.mass[hash_value].next = new_node
 
-    # получаем элемент
     def get(self, key):
-        hash = self.get_hash(key)
+        hash_value = self.get_hash(key)
 
-        # если корзина пуста
-        if self.mass[hash] == []:
-            return None
-        else:
-            temp_head = self.mass[hash]
+        if self.mass[hash_value]:
+            temp_head = self.mass[hash_value]
 
             while temp_head is not None:
                 if temp_head.key == key:
                     return temp_head.value
                 temp_head = temp_head.next
 
-            return None
-
-    # удаляем элемент
     def delete(self, key):
-        hash = self.get_hash(key)
-        temp_head = self.mass[hash]
+        hash_value = self.get_hash(key)
+        temp_head = self.mass[hash_value]
         last_elem = temp_head
         step = 0
 
-        if self.mass[hash]:
+        if self.mass[hash_value]:
             while temp_head is not None:
-                if temp_head.key == key:
-                    # элемент который удаляем
-                    value_elem = temp_head.value
 
-                    # удаляем элемент
+                if temp_head.key == key:
+                    delete_value = temp_head.value
                     if step == 0:
-                        self.mass[hash] = []
+                        self.mass[hash_value] = []
                     else:
                         last_elem.next = temp_head.next
-
-                    return value_elem
+                    return delete_value
 
                 last_elem = temp_head
                 temp_head = temp_head.next
                 step += 1
-
         return None
+
 
 def start():
     # считаем кол-во комманд
@@ -114,6 +104,5 @@ def start():
             print(hash_table.delete(int(command[1])))
 
 
-# начало работы программы
 if __name__ == "__main__":
     start()

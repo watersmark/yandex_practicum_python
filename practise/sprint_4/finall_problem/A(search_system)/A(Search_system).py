@@ -1,45 +1,47 @@
-#посылка :47949852
-# начало работы программы
+# посылка: 48012881
+
+# ___________________пространственная сложность_____________
+# (считывание данных O(n))
+# использование констант O(1)
+# общая сложность O(n)
+
+# _____________________временная сложность______________
+# заполнение dict O(n) +
+# поиск релевантности O(1) + O(k)
+# Сортировка O(n*log(n))
+# Общая сложность O(n*log(n))
+
 def calc_hash_map():
-    # кол-во документов на вход
-    count_dock = int(input())
+    document_count = int(input())
 
-    # создадим hash_map для наших слов
     # в один hash_map будет вложен другой
-    hash_map = dict()
+    index_storage_dock = dict()
 
-    for index in range(count_dock):
+    for index in range(document_count):
 
-        # строка для временного считывания
-        temp_str = input().split()
+        dock_str = input().split()
+        for word in dock_str:
 
-        # считывем каждый элемнт по отдельности
-        for elem in temp_str:
-            if elem in hash_map:
+            if word in index_storage_dock:
                 # если данный номер документа уже есть, иначе создадим
-                if index in hash_map[elem]:
-                    hash_map[elem][index] += 1
+                if index in index_storage_dock[word]:
+                    index_storage_dock[word][index] += 1
                 else:
-                    hash_map[elem][index] = 1
+                    index_storage_dock[word][index] = 1
             else:
-                hash_map[elem] = {index: 1}
+                index_storage_dock[word] = {index: 1}
 
     # перейдём к работе с запросами и поиску документов
-    # переходим во вторую функцию
-    work_with_text(hash_map)
+    work_with_text(index_storage_dock)
 
 
-# модуль для работы с запросами
 def work_with_text(hash_map):
     # перейдём к работе с запросами
     # кол-во запросов
     count_quest = int(input())
 
-    # обработаем каждый запрос по отдельности
     for index in range(count_quest):
-
-        # создадим set() для подсчёта релевантности
-        temp_set = dict()
+        relevancy_set = dict()
         temp_str = set(input().split())
 
         # пройдёмся по каждому элементу запроса
@@ -47,27 +49,22 @@ def work_with_text(hash_map):
         for elem in temp_str:
 
             if elem in hash_map:
-            # пройдёмся по каждому значению поотдельности
-            # если значение уже есть, то просто увеличим его значение релевантности
-            # иначе создадим его и сразу добавим знаение релевантности
+                # пройдёмся по каждому значению поотдельности
+                # если значение уже есть, то просто увеличим его значение релевантности
+                # иначе создадим его и сразу добавим знаение релевантности
                 for key in hash_map[elem]:
-                    if key in temp_set:
-                        temp_set[key] += hash_map[elem][key]
+                    if key in relevancy_set:
+                        relevancy_set[key] += hash_map[elem][key]
                     else:
-                        temp_set[key] = hash_map[elem][key]
+                        relevancy_set[key] = hash_map[elem][key]
 
         # выберем пять лучших документов
-        # перейдём в следующую функцию
-        top_five_dock(temp_set)
+        print_top_five_docs(relevancy_set)
 
 
 # отсортируем и выберем пять лучших документов
-def top_five_dock(temp_set):
+def print_top_five_docs(temp_set):
     temp_set = list(temp_set.items())
-
-    # отберём пять лучших запросов
-    # выьерем пять лучших элементов за 5 * O(n)
-
     temp_set = sorted(temp_set, key=lambda item: (item[1], -item[0]))
 
     # выведем наши топ 5 документов
@@ -79,6 +76,5 @@ def top_five_dock(temp_set):
     print()
 
 
-# точка входа в программу.
 if __name__ == "__main__":
     calc_hash_map()
