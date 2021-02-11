@@ -6,7 +6,12 @@ def solution(node):
 
     while True:
 
-        mass_of_temp_digit.append(str(node.value))
+        # делаем проверку чтобы ноль не стоял сначала
+        if not mass_of_temp_digit and node.value == 0:
+            pass
+        else:
+            mass_of_temp_digit.append(str(node.value))
+
 
         # добавляем элементы, если дошли до листа
         if node.left is None and node.right is None:
@@ -25,10 +30,14 @@ def solution(node):
                     break
 
         else:
+
+            if node.right is not None:
+                step_of_right_tree.append(None)
+
             step_of_right_tree.append(node.right)
 
             if node.left is None:
                 node = step_of_right_tree.pop()
-                step_of_right_tree.append(None)
+                # step_of_right_tree.append(None)
             else:
                 node = node.left
