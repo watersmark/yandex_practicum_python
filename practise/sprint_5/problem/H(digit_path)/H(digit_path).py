@@ -4,6 +4,9 @@ class Node:
         self.right = right
         self.left = left
 
+# суть данной задачи обойти последовательно прямым обходои всё дерево
+# надо так же уметь возвращаться, если мы сильно углубились при движении влево
+# и уметь возвращаться, если углубились при движени вправо
 
 def solution(node):
     sum_of_tree = 0
@@ -27,9 +30,11 @@ def solution(node):
 
             while True:
 
+                # выходим из цикла, если массив пуст
                 if not step_of_right_tree: return sum_of_tree
                 next_node = step_of_right_tree.pop()
 
+                # удаляем элемент из массива, есди в другом массиве он помечен как None
                 if next_node is None:
                     mass_of_temp_digit.pop()
                 else:
@@ -37,15 +42,14 @@ def solution(node):
                     break
 
         else:
-
+            # чтобы можно было вернуться из правой ветви
             if node.right is not None:
                 step_of_right_tree.append(None)
-
+            # на каждой иттерации добавляем значение правой ветви, чтобы
+            # если сделали много шагов по левой ветви можно было вернуться
             step_of_right_tree.append(node.right)
-
             if node.left is None:
                 node = step_of_right_tree.pop()
-                # step_of_right_tree.append(None)
             else:
                 node = node.left
 

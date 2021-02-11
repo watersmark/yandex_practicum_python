@@ -31,9 +31,12 @@ def solution(node):
 
         else:
 
+            # чтобы можно было вернуться из правой ветви
             if node.right is not None:
                 step_of_right_tree.append(None)
 
+            # на каждой иттерации добавляем значение правой ветви, чтобы
+            # если сделали много шагов по левой ветви можно было вернуться
             step_of_right_tree.append(node.right)
 
             if node.left is None:
